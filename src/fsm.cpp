@@ -115,13 +115,13 @@ void FSM::unlock() {
 	_is_locked = false;
 }
 
-void FSM::tick() const {
+void FSM::tick(double p_delta) const {
 	NFSM_ASSERT_RETURN_MSG(_is_locked, "FSM is not locked.");
 	NFSM_ASSERT_RETURN_MSG(_is_running, "FSM is not running.");
 
 	auto state = get_current_state().value_or(nullptr);
 	NFSM_ASSERT_RETURN_MSG(state, "No current state is set.");
-	state->on_process();
+	state->on_process(p_delta);
 }
 
 void FSM::process_event(const std::string &p_event) {

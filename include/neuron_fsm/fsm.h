@@ -2,6 +2,7 @@
 #define NEURON_FSM_FSM_H
 
 #include "state.h"
+#include <memory>
 #include <optional>
 
 namespace neuron_fsm {
@@ -29,7 +30,7 @@ public:
 	void lock();
 	void unlock();
 
-	void tick() const;
+	void tick(double p_delta) const;
 
 	void process_event(const std::string &p_event);
 
