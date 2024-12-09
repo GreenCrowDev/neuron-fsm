@@ -35,6 +35,11 @@ void FSM::add_transition(const std::string &p_state, const std::string &p_event,
 	state_node->get().add_transition(p_event, p_target);
 }
 
+std::optional<std::string> FSM::get_starting_state_name() const {
+	NFSM_ASSERT_RETURN_V_MSG(starting_state != states.end(), std::nullopt, "Starting state is not set.");
+	return starting_state->first;
+}
+
 std::optional<std::shared_ptr<State>> FSM::get_starting_state() const {
 	NFSM_ASSERT_RETURN_V_MSG(starting_state != states.end(), std::nullopt, "Starting state is not set.");
 	return starting_state->second.state;
@@ -53,6 +58,13 @@ void FSM::change_state(const std::string &p_name, const bool p_silent) {
 	NFSM_ASSERT_RETURN_MSG(_is_running, "FSM is not running.");
 
 	_transition_to(p_name);
+}
+
+std::optional<std::string> FSM::get_current_state_name() const {
+	NFSM_ASSERT_RETURN_V_MSG(_is_locked, std::nullopt, "FSM is not locked.");
+	NFSM_ASSERT_RETURN_V_MSG(_is_running, std::nullopt, "FSM is not running.");
+	NFSM_ASSERT_RETURN_V_MSG(current_state != states.end(), std::nullopt, "Current state is not set.");
+	return current_state->first;
 }
 
 std::optional<std::shared_ptr<State>> FSM::get_current_state() const {

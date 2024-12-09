@@ -22,6 +22,7 @@ TEST_CASE("FSM initializazion.") {
 
 	// Set the starting state.
 	fsm.set_starting_state(state_name);
+	CHECK(fsm.get_starting_state_name() == state_name);
 	CHECK(fsm.get_starting_state() == state);
 }
 
@@ -67,14 +68,17 @@ TEST_CASE("FSM behaviour.") {
 
 		fsm.start();
 		CHECK(fsm.is_running());
+		CHECK(fsm.get_current_state_name() == start_state_name);
 		CHECK(fsm.get_current_state() == start_state);
 
 		// Change state through an event.
 		fsm.process_event(start_to_new_event);
+		CHECK(fsm.get_current_state_name() == new_state_name);
 		CHECK(fsm.get_current_state() == new_state);
 
 		// FSM manual state changing.
 		fsm.change_state(start_state_name);
+		CHECK(fsm.get_current_state_name() == start_state_name);
 		CHECK(fsm.get_current_state() == start_state);
 
 		fsm.pause();
@@ -85,6 +89,7 @@ TEST_CASE("FSM behaviour.") {
 
 		fsm.stop();
 		CHECK_FALSE(fsm.is_running());
+		CHECK_FALSE(fsm.get_current_state_name());
 		CHECK_FALSE(fsm.get_current_state());
 
 		fsm.start();
@@ -92,6 +97,7 @@ TEST_CASE("FSM behaviour.") {
 
 		fsm.reset();
 		CHECK_FALSE(fsm.is_running());
+		CHECK_FALSE(fsm.get_current_state_name());
 		CHECK_FALSE(fsm.get_current_state());
 
 		fsm.unlock();
