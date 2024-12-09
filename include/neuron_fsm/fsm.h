@@ -16,8 +16,10 @@ public:
 	std::optional<std::shared_ptr<State>> get_state(const std::string &p_name);
 	void add_transition(const std::string &p_state, const std::string &p_event, const std::string &p_target);
 
+	std::optional<std::string> get_starting_state_name() const;
 	std::optional<std::shared_ptr<State>> get_starting_state() const;
 	void set_starting_state(const std::string &p_name);
+	std::optional<std::string> get_current_state_name() const;
 	std::optional<std::shared_ptr<State>> get_current_state() const;
 	void change_state(const std::string &p_name, const bool p_silent = false);
 
