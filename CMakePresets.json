@@ -51,7 +51,7 @@
       "name": "linux-debug",
       "displayName": "64bit Linux Debug",
       "inherits": "default",
-      "binaryDir": "${sourceDir}/../build/$env{PROJECT_NAME}_linux-x86_64",
+      "binaryDir": "${sourceDir}/build/$env{PROJECT_NAME}_linux-x86_64",
       "condition": {
         "type": "equals",
         "lhs": "${hostSystemName}",
@@ -73,7 +73,7 @@
       "name": "macos-debug",
       "displayName": "64bit macOS Debug",
       "inherits": "default",
-      "binaryDir": "${sourceDir}/../build/$env{PROJECT_NAME}_macos",
+      "binaryDir": "${sourceDir}/build/$env{PROJECT_NAME}_macos",
       "condition": {
         "type": "equals",
         "lhs": "${hostSystemName}",
