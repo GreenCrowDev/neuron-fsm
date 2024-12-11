@@ -20,7 +20,6 @@
       "displayName": "64bit Windows Debug",
       "inherits": "default",
       "generator": "Visual Studio 17 2022",
-      "binaryDir": "${sourceDir}/build/$env{PROJECT_NAME}_windows-x86_64",
       "condition": {
         "type": "equals",
         "lhs": "${hostSystemName}",
@@ -51,7 +50,6 @@
       "name": "linux-debug",
       "displayName": "64bit Linux Debug",
       "inherits": "default",
-      "binaryDir": "${sourceDir}/build/$env{PROJECT_NAME}_linux-x86_64",
       "condition": {
         "type": "equals",
         "lhs": "${hostSystemName}",
@@ -73,7 +71,6 @@
       "name": "macos-debug",
       "displayName": "64bit macOS Debug",
       "inherits": "default",
-      "binaryDir": "${sourceDir}/build/$env{PROJECT_NAME}_macos",
       "condition": {
         "type": "equals",
         "lhs": "${hostSystemName}",
