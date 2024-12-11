@@ -1,0 +1,19 @@
+name: CMake generation
+description: Generate the build tree.
+
+inputs:
+  platform:
+    description: Target platform (linux, macos, windows)
+    default: linux
+  build_type:
+    description: Lowercase build type (debug, release)
+    default: debug
+
+runs:
+  using: composite
+  steps:
+    - name: CMake generation
+      shell: sh
+      run: >
+          cmake --preset=${{ inputs.platform }}-${{ inputs.build_type }}
+          ${{ matrix.build_type == 'Debug' && '-DBUILD_TESTS=ON' || '' }}
