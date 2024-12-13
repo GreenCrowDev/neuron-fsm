@@ -1,0 +1,50 @@
+name: 🍎 macOS Builds
+on:
+  workflow_call:
+
+# Global Settings
+env:
+  NFSM_BASE_BRANCH: master
+
+concurrency:
+  group: ci-${{ github.actor }}-${{ github.head_ref || github.run_number }}-${{ github.ref }}-macos
+  cancel-in-progress: true
+
+jobs:
+  build-macos:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-latest]
+        build_type: [Release, Debug]
+        cpp_compiler: [g++, clang++]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set reusable strings
+        id: strings
+        shell: sh
+        run: >
+          echo "build-path=${{ github.workspace }}/build/neuron-fsm_macos-universal" >> "$GITHUB_OUTPUT"
+
+      - name: CMake generation
+        uses: ./.github/actions/cmake-gen
+        with:
+          platform: macos
+          build_type: ${{ matrix.build_type == 'Debug' && 'debug' || 'release' }}
+
+      - name: CMake build
+        uses: ./.github/actions/cmake-build
+        with:
+          build_path: ${{ steps.strings.outputs.build-path }}
+          build_type: ${{ matrix.build_type }}
+
+      - name: Run tests
+        if: ${{ matrix.build_type == 'Debug' }}
+        uses: ./.github/actions/ctest-run
+        with:
+          build_path: ${{ steps.strings.outputs.build-path }}
+          build_type: ${{ matrix.build_type }}
