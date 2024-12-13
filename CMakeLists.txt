@@ -19,6 +19,8 @@ add_library(neuron_fsm ${SOURCE_FILES})
 
 target_include_directories(neuron_fsm PRIVATE include)
 
+target_compile_options(neuron_fsm PRIVATE -fPIC)
+
 # Get version from Git.
 execute_process(
     COMMAND git describe --tags --abbrev=0
